@@ -1,0 +1,137 @@
+{
+  "forecast": [
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-10",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"        
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-11",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"      
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-12",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"         
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-13",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"        
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-14",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"          
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-15",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"         
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-16",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"     
+        }
+      ]
+    },
+   
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-17",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"       
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-18",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"        
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-19",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"        
+        }
+      ]
+    },
+    {
+      "city": {
+        "name": "São Paulo"      
+      },
+      "date": "2024-03-20",
+      "weather": [
+        {       
+          "temperature": "25" ,
+          "measurement": "C"       
+        }
+      ]
+    }
+  ]
+}

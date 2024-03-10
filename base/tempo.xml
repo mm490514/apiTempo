@@ -1,0 +1,122 @@
+<forecast>
+    <city>
+        <name>São Paulo</name>        
+        <date>2024-03-10</date>
+        <weather>
+            <forecast_item>            
+                <temperature>25</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+    <city>
+        <name>Rio de Janeiro</name>        
+        <date>2024-03-10</date>
+        <weather>
+            <forecast_item>            
+                <temperature>25</temperature> 
+                <measurement>C</measurement>                       
+            </forecast_item>    
+        </weather>
+    </city>
+    <city>
+        <name>São Paulo</name>        
+        <date>2024-03-11</date>
+        <weather>
+            <forecast_item>            
+                <temperature>25</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-12</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-13</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-14</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-15</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-16</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>           
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-17</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-18</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-19</date>
+        <weather>
+            <forecast_item>            
+                <temperature>35</temperature> 
+                <measurement>C</measurement>            
+            </forecast_item>    
+        </weather>
+    </city>
+     <city>
+        <name>São Paulo</name>        
+        <date>2024-03-20</date>
+        <weather>
+            <forecast_item>            
+               <temperature>35</temperature> 
+                <measurement>C</measurement>           
+            </forecast_item>    
+        </weather>
+    </city>
+</forecast>

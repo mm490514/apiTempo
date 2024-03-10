@@ -13,7 +13,7 @@ date_default_timezone_set('America/Sao_Paulo');
 $host = '127.0.0.1';
 $usuario = 'root';
 $senha = 'root';
-$banco = 'receitas';
+$banco = 'clima';
 
 try {
 	$pdo = new PDO("mysql:dbname=$banco; host=$host", "$usuario", "$senha");
