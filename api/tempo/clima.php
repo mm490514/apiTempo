@@ -30,35 +30,39 @@ if ($data) {
         //Importação XML 
         importarXML($caminhoXML);
 
-        $query = $pdo->prepare("SELECT * from candidatos where nome LIKE '$buscar' or cpf LIKE '$buscar' order by id ASC");
+        $query = $pdo->prepare("SELECT cidade.nome, clima.data, ROUND(AVG(clima.temperatura), 2) AS temperatura_media, escala.simbolo 
+                                FROM clima
+                                LEFT JOIN cidade ON clima.id_cidade = cidade.id
+                                LEFT JOIN escala ON escala.id = clima.id_escala
+                                GROUP BY cidade.nome, clima.data, escala.simbolo");
 
-        $query->execute();
+        // $query->execute();
 
-        $res = $query->fetchAll(PDO::FETCH_ASSOC);
+        // $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        for ($i=0; $i < count($res); $i++) { 
-            foreach ($res[$i] as $key => $value) {  }    
+        // for ($i=0; $i < count($res); $i++) { 
+        //     foreach ($res[$i] as $key => $value) {  }    
 
-            $dados[] = array(
-                'id' => $res[$i]['id'],
-                'nome' => $res[$i]['nome'],
-                'cpf' => $res[$i]['cpf'],
-                'data_nasc' => $res[$i]['data_nasc'],
-                'id_grau_escolaridade' => $res[$i]['id_grau_escolaridade'],
-                'endereco' => $res[$i]['endereco'],
-                'area_interesse' => $res[$i]['area_interesse'],
-                'descricao' => $res[$i]['descricao'],
-                'id_usuario' => $res[$i]['id_usuario'],        
-            );
-        }
+        //     $dados[] = array(
+        //         'id' => $res[$i]['id'],
+        //         'nome' => $res[$i]['nome'],
+        //         'cpf' => $res[$i]['cpf'],
+        //         'data_nasc' => $res[$i]['data_nasc'],
+        //         'id_grau_escolaridade' => $res[$i]['id_grau_escolaridade'],
+        //         'endereco' => $res[$i]['endereco'],
+        //         'area_interesse' => $res[$i]['area_interesse'],
+        //         'descricao' => $res[$i]['descricao'],
+        //         'id_usuario' => $res[$i]['id_usuario'],        
+        //     );
+        // }
 
-        if(count($res) > 0){
-            $result = json_encode(array('success'=>true, 'itens'=>$dados));
-        }else{
-            $result = json_encode(array('success'=>false, 'resultado'=>'0'));
-        }
+        // if(count($res) > 0){
+        //     $result = json_encode(array('success'=>true, 'itens'=>$dados));
+        // }else{
+        //     $result = json_encode(array('success'=>false, 'resultado'=>'0'));
+        // }
 
-        echo $result;
+        // echo $result;
 
     }     
 } 
@@ -97,14 +101,13 @@ function obterIdCidade($conexao, $cidade) {
     }
 }
 
-function obterIdescala($conexao, $cidade) {
-    $query = "SELECT id FROM cidade WHERE nome = ?";
-    $stmt = $conexao->prepare($query);
-    $stmt->execute([$cidade]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+function obterIdescala($conexao, $simbolo) {
 
-    if ($result) {
-        return $result['id'];
+    $query3 = $conexao->query("SELECT * from escala where simbolo = '$simbolo'");    
+    $res3 = $query3->fetchAll(PDO::FETCH_ASSOC);
+    $id = @$res3[0]['id'];       
+    if ($id) {
+        return $id;
     }
 }
 
@@ -125,7 +128,7 @@ function importarCSV($caminhoArquivo) {
             $id_cidade = obterIdCidade($conexao, $cidade);            
             $id_escala = obterIdescala($conexao, $escala);            
             
-            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?)";
+            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?, ?)";
             $stmt = $conexao->prepare($query);
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
@@ -152,7 +155,7 @@ function importarJSON($caminhoArquivo) {
             $id_cidade = obterIdCidade($conexao, $cidade);            
             $id_escala = obterIdescala($conexao, $escala);            
             
-            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?)";
+            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?, ?)";
             $stmt = $conexao->prepare($query);
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
@@ -177,7 +180,7 @@ function importarXML($caminhoArquivo) {
             $id_cidade = obterIdCidade($conexao, $cidade);
             $id_escala = obterIdescala($conexao, $escala);            
             
-            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?)";
+            $query = "INSERT INTO clima (id_cidade, id_escala, temperatura, data) VALUES (?, ?, ?, ?)";
             $stmt = $conexao->prepare($query);
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
