@@ -15,56 +15,76 @@ if ($data) {
     $dataAtualMais10Dias = $dataAtual->modify('+10 days');     
     $hoje->setTime(0, 0, 0);
     $dataFornecida->setTime(0, 0, 0);
+    
     if ($dataFornecida < $dataAtualMais10Dias && $dataFornecida >= $hoje) {
-       
-        $caminhoCSV = "../../base/tempo.csv";
-        $caminhoJSON = "../../base/tempo.json";
-        $caminhoXML = "../../base/tempo.xml";
+
+         // Prepare and execute the SQL query
+        $query = $pdo->prepare("DELETE FROM clima");       
+        $query->execute();
         
-        //Importação CSV 
-        importarCSV($caminhoCSV);
+        $query = $pdo->prepare("SELECT * from fornecedores");       
+        $query->execute();
 
-        //Importação CSV 
-        importarJSON($caminhoJSON);
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        //Importação XML 
-        importarXML($caminhoXML);
+        for ($i=0; $i < count($res); $i++) { 
+            foreach ($res[$i] as $key => $value) {  
+                if ($res[$i]['tipo_arquivo'] == "CSV"){
+                    $caminhoCSV = "../../base/" . $res[$i]['nome_arquivo'];
+                    importarCSV($caminhoCSV);
+                } else if ($res[$i]['tipo_arquivo'] == "JSON"){
+                    $caminhoJSON = "../../base/" . $res[$i]['nome_arquivo'];
+                    importarJSON($caminhoJSON);
+                } else if ($res[$i]['tipo_arquivo'] == "XML"){
+                    $caminhoXML = "../../base/" . $res[$i]['nome_arquivo'];
+                    importarXML($caminhoXML);
+                }
 
+            }                
+        }
+        
+        $cidadeNome = $cidade; // Sanitize if necessary
+        $dataInicio = $dataFornecida->format('Y-m-d');
+        $dataFim = $dataAtualMais10Dias->format('Y-m-d');
+        
+        // Prepare and execute the SQL query
         $query = $pdo->prepare("SELECT cidade.nome, clima.data, ROUND(AVG(clima.temperatura), 2) AS temperatura_media, escala.simbolo 
                                 FROM clima
                                 LEFT JOIN cidade ON clima.id_cidade = cidade.id
                                 LEFT JOIN escala ON escala.id = clima.id_escala
+                                WHERE cidade.nome = :cidadeNome
+                                AND clima.data BETWEEN :dataInicio AND :dataFim
                                 GROUP BY cidade.nome, clima.data, escala.simbolo");
+        
+        $query->bindParam(':cidadeNome', $cidadeNome, PDO::PARAM_STR);
+        $query->bindParam(':dataInicio', $dataInicio, PDO::PARAM_STR);
+        $query->bindParam(':dataFim', $dataFim, PDO::PARAM_STR);
+        $query->execute();        
+        
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);        
 
-        // $query->execute();
+        for ($i=0; $i < count($res); $i++) { 
+            foreach ($res[$i] as $key => $value) {  }    
 
-        // $res = $query->fetchAll(PDO::FETCH_ASSOC);
+            $dados[] = array(
+                'nome' => $res[$i]['nome'],
+                'data' => $res[$i]['data'],
+                'temperatura_media' => $res[$i]['temperatura_media'],
+                'simbolo' => $res[$i]['simbolo'],                      
+            );
+        }
 
-        // for ($i=0; $i < count($res); $i++) { 
-        //     foreach ($res[$i] as $key => $value) {  }    
+        if(count($res) > 0){
+            $result = json_encode(array('success'=>true, 'itens'=>$dados));
+        }else{
+            $result = json_encode(array('success'=>false, 'resultado'=>'0'));
+        }
 
-        //     $dados[] = array(
-        //         'id' => $res[$i]['id'],
-        //         'nome' => $res[$i]['nome'],
-        //         'cpf' => $res[$i]['cpf'],
-        //         'data_nasc' => $res[$i]['data_nasc'],
-        //         'id_grau_escolaridade' => $res[$i]['id_grau_escolaridade'],
-        //         'endereco' => $res[$i]['endereco'],
-        //         'area_interesse' => $res[$i]['area_interesse'],
-        //         'descricao' => $res[$i]['descricao'],
-        //         'id_usuario' => $res[$i]['id_usuario'],        
-        //     );
-        // }
+        echo $result;
 
-        // if(count($res) > 0){
-        //     $result = json_encode(array('success'=>true, 'itens'=>$dados));
-        // }else{
-        //     $result = json_encode(array('success'=>false, 'resultado'=>'0'));
-        // }
-
-        // echo $result;
-
-    }     
+    } else {
+        $result = json_encode(array('success'=>false, 'resultado'=>'0'));
+    }    
 } 
 
 function conectarBancoDados() {
@@ -133,8 +153,7 @@ function importarCSV($caminhoArquivo) {
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
 
-        fclose($arquivo);
-        echo "Importação concluída.";
+        fclose($arquivo);        
     } else {
         echo "Erro ao abrir o arquivo.";
     }
@@ -160,7 +179,7 @@ function importarJSON($caminhoArquivo) {
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
 
-        echo "Importação concluída.";
+        
     } else {
         echo "Erro ao ler o arquivo JSON.";
     }
@@ -185,7 +204,7 @@ function importarXML($caminhoArquivo) {
             $stmt->execute([$id_cidade, $id_escala, $temperatura, $data]);
         }
 
-        echo "Importação concluída.";
+       
     } else {
         echo "Erro ao carregar o arquivo XML.";
     }
